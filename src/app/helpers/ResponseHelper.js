@@ -1,3 +1,3 @@
-module.exports = async ({ response, success = true, status = 200, message }) => {
-  response.status(status).json({ success, message });
-};
+module.exports = async ({ response, success = true, status = 200, data = null }) => (
+  response.status(status).json({ success, data })
+);

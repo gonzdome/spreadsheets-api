@@ -1,3 +1,4 @@
+const fs = require('fs');
 const XLSX = require('xlsx');
 
 module.exports = async (data) => {
@@ -6,12 +7,17 @@ module.exports = async (data) => {
   const newDateToIso = new Date().toISOString().split('T')[0];
   const randomNumberByDateNow = Math.floor(Date.now() / 1000);
 
+  const fileDir = './temp/';
+  const fileName = `${newDateToIso}${randomNumberByDateNow}.xlsx`;
+  const filePath = `${fileDir}${fileName}`;
+
   const workSheet = jsonToSheet(data);
   const workBook = bookNew();
-  bookAppendSheet(workBook, workSheet, `${newDateToIso}_${randomNumberByDateNow}`);
+  bookAppendSheet(workBook, workSheet, `${newDateToIso}${randomNumberByDateNow}`);
 
-  const fileDirectory = `./temp/${newDateToIso}_${randomNumberByDateNow}.xlsx`;
-  XLSX.writeFile(workBook, fileDirectory);
+  // Create path if it doesn't exist then create xlsx file
+  if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir, { recursive: true });
+  XLSX.writeFile(workBook, filePath);
 
-  return fileDirectory;
+  return { fileName, filePath };
 };

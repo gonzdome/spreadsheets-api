@@ -1,14 +1,31 @@
+const { XLSX, CSV } = require('../../utils/SpreadsheetsTypes');
 const ResponseHelper = require('../helpers/ResponseHelper');
-const CreateSpreadSheetService = require('../services/CreateSpreadsheetService');
+const CreateCSVFileService = require('../services/csv/CreateCSVFileService');
+const CreateXLSXFileService = require('../services/xlsx/CreateXLSXFileService');
+const CreateSpreadsheetValidator = require('../validator/CreateSpreadsheetValidator');
 
 module.exports = async (request, response) => {
+  const { API_URL } = process.env;
+
   try {
-    const { types = null, data } = request.body;
+    await CreateSpreadsheetValidator(request.body);
 
-    const spreadsheet = await CreateSpreadSheetService({ types, data });
+    const { types = 'xlsx', data } = request.body;
 
-    await ResponseHelper({ response, success: true, status: 200, message: spreadsheet });
+    const xlsx = types.includes(XLSX) ? await CreateXLSXFileService(data) : '';
+    const csv = types.includes(CSV) ? await CreateCSVFileService(data) : '';
+
+    await ResponseHelper({
+      response,
+      success: true,
+      status: 200,
+      data: {
+        message: 'To download the desired files, click the link bellow',
+        url: `${API_URL}/spreadsheet/download`,
+        files: { xlsx, csv }
+      }
+    });
   } catch (error) {
-    await ResponseHelper({ response, success: false, status: 400, message: error });
+    await ResponseHelper({ response, success: false, status: 400, data: error.message ?? error });
   }
 };
