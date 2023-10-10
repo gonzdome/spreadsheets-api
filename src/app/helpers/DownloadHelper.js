@@ -4,8 +4,6 @@ const fs = require('fs/promises');
 
 module.exports = async (response, download) => {
   response.status(200).zip(download.fileObjects, download.spreadsheetName, () => {
-    download.fileObjects.forEach(async file => {
-      await fs.unlink(file.path);
-    });
+    download.fileObjects.forEach(file => fs.unlink(file.path));
   });
 };
