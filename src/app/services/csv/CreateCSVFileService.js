@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { CSV } = require('../../../utils/SpreadsheetsTypes');
+const { CSV } = require('../../../utils/FileTypes');
 
 module.exports = async (data) => {
   const { FILE_DIR } = process.env;
@@ -11,7 +11,7 @@ module.exports = async (data) => {
   const filePath = `${FILE_DIR}${fileName}`;
 
   const csvHeaders = Object.keys(data[0]).join(',');
-  const csvValues = data.map((row) => Object.values(row).join(',')).join('\n');
+  const csvValues = data.map(row => Object.values(row).join(',')).join('\n');
   const csvContent = `${csvHeaders}\n${csvValues}`;
 
   // Create path if it doesn't exist then create csv file

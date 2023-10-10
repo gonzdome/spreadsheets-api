@@ -1,7 +1,7 @@
-const { XLSX, CSV } = require('../../utils/SpreadsheetsTypes');
 const SpreadsheetModel = require('../models/SpreadsheetModel');
 const CreateCSVFileService = require('./csv/CreateCSVFileService');
 const CreateXLSXFileService = require('./xlsx/CreateXLSXFileService');
+const { XLSX, CSV } = require('../../utils/FileTypes');
 
 module.exports = async (types, data) => {
   const xlsx = types.includes(XLSX) ? await CreateXLSXFileService(data) : false;

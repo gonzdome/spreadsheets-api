@@ -1,4 +1,5 @@
 module.exports = {
   XLSX: 'xlsx',
-  CSV: 'csv'
+  CSV: 'csv',
+  RAR: 'rar'
 };

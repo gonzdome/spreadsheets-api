@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { writeFile, utils } = require('xlsx');
-const { XLSX } = require('../../../utils/SpreadsheetsTypes');
+const { XLSX } = require('../../../utils/FileTypes');
 
 module.exports = async (data) => {
   const { FILE_DIR } = process.env;
