@@ -1,7 +1,5 @@
-const { XLSX, CSV } = require('../../utils/SpreadsheetsTypes');
 const ResponseHelper = require('../helpers/ResponseHelper');
-const CreateCSVFileService = require('../services/csv/CreateCSVFileService');
-const CreateXLSXFileService = require('../services/xlsx/CreateXLSXFileService');
+const CreateSpreadsheetService = require('../services/CreateSpreadsheetService');
 const CreateSpreadsheetValidator = require('../validator/CreateSpreadsheetValidator');
 
 module.exports = async (request, response) => {
@@ -12,8 +10,7 @@ module.exports = async (request, response) => {
 
     const { types = 'xlsx', data } = request.body;
 
-    const xlsx = types.includes(XLSX) ? await CreateXLSXFileService(data) : '';
-    const csv = types.includes(CSV) ? await CreateCSVFileService(data) : '';
+    const { xlsx, csv } = await CreateSpreadsheetService(types, data);
 
     await ResponseHelper({
       response,
