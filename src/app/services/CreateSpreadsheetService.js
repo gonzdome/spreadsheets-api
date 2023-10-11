@@ -7,15 +7,14 @@ module.exports = async (types, data) => {
   const xlsx = types.includes(XLSX) ? await CreateXLSXFileService(data) : false;
   const csv = types.includes(CSV) ? await CreateCSVFileService(data) : false;
 
-  const fileName = {};
-  if (xlsx?.fileName) fileName.xlsx = xlsx;
-  if (csv?.fileName) fileName.csv = csv;
+  const file = {};
+  if (xlsx?.fileName) file.xlsx = { file_name: xlsx.fileName, file_path: xlsx.filePath };
+  if (csv?.fileName) file.csv = { file_name: csv.fileName, file_path: csv.filePath };
 
-  const fileType = { xlsx: !!xlsx, csv: !!csv };
-  const fileData = { file_type: fileType, data };
+  const fileData = { file_types: types, data };
 
-  const findSpreadsheet = await SpreadsheetModel.findOne(fileData);
-  if (!findSpreadsheet) await SpreadsheetModel.create({ file: fileName, ...fileData });
+  const findSpreadsheet = await SpreadsheetModel.findOne(fileData, { _id: 1 });
+  if (!findSpreadsheet) await SpreadsheetModel.create({ file, ...fileData });
 
   return { xlsx, csv };
 };
