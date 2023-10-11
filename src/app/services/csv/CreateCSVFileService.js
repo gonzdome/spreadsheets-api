@@ -1,14 +1,14 @@
 const fs = require('fs');
 const { CSV } = require('../../../utils/FileTypes');
 
-module.exports = async (data) => {
+module.exports = async (fileName, data) => {
   const { FILE_DIR } = process.env;
 
   const newDateToIso = new Date().toISOString().split('T')[0];
   const randomNumberByDateNow = Math.floor(Date.now() / 1000);
 
-  const fileName = `${newDateToIso}${randomNumberByDateNow}.${CSV}`;
-  const filePath = `${FILE_DIR}${fileName}`;
+  if (!fileName) fileName = `${newDateToIso}${randomNumberByDateNow}`;
+  const filePath = `${FILE_DIR}${fileName}.${CSV}`;
 
   const csvHeaders = Object.keys(data[0]).join(',');
   const csvValues = data.map(row => Object.values(row).join(',')).join('\n');
