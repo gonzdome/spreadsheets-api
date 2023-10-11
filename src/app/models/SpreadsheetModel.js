@@ -1,10 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const SpreadsheetSchema = new Schema({
-  file_type: {
-    xlsx: Boolean,
-    csv: Boolean
-  },
+  file_types: { type: Array },
   file: {
     xlsx: { fileName: String, filePath: String },
     csv: { fileName: String, filePath: String }
