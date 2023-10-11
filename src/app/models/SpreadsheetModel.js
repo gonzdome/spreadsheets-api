@@ -5,8 +5,8 @@ const SpreadsheetSchema = new Schema(
   {
     file_types: { type: Array },
     file: {
-      xlsx: { fileName: String, filePath: String },
-      csv: { fileName: String, filePath: String }
+      xlsx: { file_name: String, file_path: String },
+      csv: { file_name: String, file_path: String }
     },
     data: { type: Array },
     created_at: { type: Date, default: removeHours(new Date(), 3) },
