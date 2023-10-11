@@ -8,9 +8,9 @@ module.exports = async (request, response) => {
   try {
     await CreateSpreadsheetValidator(request.body);
 
-    const { types = 'xlsx', data } = request.body;
+    const { fileName, types = 'xlsx', data } = request.body;
 
-    const { xlsx, csv } = await CreateSpreadsheetService(types, data);
+    const { xlsx, csv } = await CreateSpreadsheetService(fileName, types, data);
 
     await ResponseHelper({
       response,
