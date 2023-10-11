@@ -22,7 +22,6 @@
     "camelcase": "off",
     "no-new": "off",
     "comma-dangle": ["error", "never"],
-    "arrow-parens": "off",
-    "no-param-reassign": "off"
+    "arrow-parens": "off"
   }
 }

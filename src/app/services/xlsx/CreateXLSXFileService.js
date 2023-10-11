@@ -2,15 +2,15 @@ const fs = require('fs');
 const { writeFile, utils } = require('xlsx');
 const { XLSX } = require('../../../utils/FileTypes');
 
-module.exports = async (fileName, data) => {
+module.exports = async (data) => {
   const { FILE_DIR } = process.env;
   const { json_to_sheet: jsonToSheet, book_new: bookNew, book_append_sheet: bookAppendSheet } = utils;
 
   const newDateToIso = new Date().toISOString().split('T')[0];
   const randomNumberByDateNow = Math.floor(Date.now() / 1000);
 
-  if (!fileName) fileName = `${newDateToIso}${randomNumberByDateNow}`;
-  const filePath = `${FILE_DIR}${fileName}.${XLSX}`;
+  const fileName = `${newDateToIso}${randomNumberByDateNow}.${XLSX}`;
+  const filePath = `${FILE_DIR}${fileName}`;
 
   const workSheet = jsonToSheet(data);
   const workBook = bookNew();
