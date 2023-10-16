@@ -1,5 +1,5 @@
 # spreadsheets-api
-Create spreadsheets passing a JSON payload or send a spreadsheet file to read JSON info.
+Create spreadsheets passing a JSON payload and download as a zip file.
 
 # POST /spreadsheet/generate
 Route Create Spreadsheet:
